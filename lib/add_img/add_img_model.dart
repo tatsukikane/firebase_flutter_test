@@ -19,7 +19,7 @@ class AddImgModel extends ChangeNotifier {
     }
 
     //firestoreに追加
-    await FirebaseFirestore.instance.collection('imags').add({
+    await FirebaseFirestore.instance.collection('images').add({
       'title':title,
       'imgurl':imgurl,
     });

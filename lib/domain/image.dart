@@ -1,6 +1,8 @@
 
 class Imagedeta{
-  Imagedeta(this.title, this.imgurl);
+  Imagedeta(this.id,this.title, this.imgurl);
+
+  String id;
   String title;
   String imgurl;
 }
