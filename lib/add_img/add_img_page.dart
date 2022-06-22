@@ -24,74 +24,87 @@ class AddImgPage extends StatelessWidget {
         ),
         body: Center(
           child: Consumer<AddImgModel>(builder: (context, model, child){
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    child: SizedBox(
-                      width: 320,
-                      height: 400,
-                      child: model.imageFile != null
-                      ? Image.file(model.imageFile!)
-                      : Container(
-                        color: Colors.grey,
-                      )
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: SizedBox(
+                          width: 320,
+                          height: 400,
+                          child: model.imageFile != null
+                          ? Image.file(model.imageFile!)
+                          : Container(
+                            color: Colors.grey,
+                          )
+                        ),
+                        onTap: () async {
+                          await model.pickImage();
+                        },
+                      ),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: '写真のタイトル',
+                      ),
+                      onChanged: (text) {
+                        model.title = text;
+                      },
                     ),
-                    onTap: () async {
-                      await model.pickImage();
+
+                  const SizedBox(
+                    height: 8,
+                  ),
+                
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: '説明欄',
+                    ),
+                    onChanged: (text) {
+                      model.subtitle = text;
                     },
                   ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: '写真のタイトル',
+                  const SizedBox(
+                    height: 16,
                   ),
-                  onChanged: (text) {
-                    model.title = text;
+                  ElevatedButton(onPressed: () async {
+                    //追加の処理
+                    try{
+                      model.startLoading();
+                      await model.addImg();
+                      Navigator.of(context).pop(true);
+                      //Navigator.pop(context, true);
+                      // final snackBar = SnackBar(
+                      //   backgroundColor: Colors.green,
+                      //   content: Text('景色の追加完了しました。'),
+                      // );
+                      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+
+                    } catch(err) {
+                      //エラーの出力
+                      final snackBar = SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(err.toString()),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } finally {
+                      model.endLoading();
+                    }
                   },
+                  child: Text('追加する'),
+                  ),
+                          ],
+                        ),
                 ),
-
-              const SizedBox(
-                height: 8,
-              ),
-            
-              TextField(
-                decoration: InputDecoration(
-                  hintText: '説明欄',
-                ),
-                onChanged: (text) {
-                  model.subtitle = text;
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(onPressed: () async {
-                //追加の処理
-                try{
-                  await model.addImg();
-                  Navigator.of(context).pop(true);
-                  //Navigator.pop(context, true);
-                  // final snackBar = SnackBar(
-                  //   backgroundColor: Colors.green,
-                  //   content: Text('景色の追加完了しました。'),
-                  // );
-                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-
-                } catch(err) {
-                  //エラーの出力
-                  final snackBar = SnackBar(
-                    backgroundColor: Colors.red,
-                    content: Text(err.toString()),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              },
-              child: Text('追加する'),
-              ),
-                      ],
+                if (model.isLoading)
+                  Container(
+                    color: Colors.black54,
+                    child: Center(child: CircularProgressIndicator(),
                     ),
+                  ),
+              ],
             );
       }),
     ),
@@ -100,4 +113,3 @@ class AddImgPage extends StatelessWidget {
     );
   }
 }
-

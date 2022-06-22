@@ -11,19 +11,19 @@ class AddImgModel extends ChangeNotifier {
   String? title;
   String? subtitle;
   File? imageFile;
-  // bool isLoading = false;
+  bool isLoading = false;
   
   final picker = ImagePicker();
 
-  // void startLoading(){
-  //   isLoading = true;
-  //   notifyListeners();
-  // }
+  void startLoading(){
+    isLoading = true;
+    notifyListeners();
+  }
 
-  // void endLoading(){
-  //   isLoading = false;
-  //   notifyListeners();
-  // }
+  void endLoading(){
+    isLoading = false;
+    notifyListeners();
+  }
 
 
   //firebaseの変更をリッスンしている
