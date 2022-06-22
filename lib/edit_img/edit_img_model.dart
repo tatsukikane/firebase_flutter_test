@@ -7,38 +7,38 @@ class EditImgModel extends ChangeNotifier {
   final Imagedeta image;
   EditImgModel(this.image) {
     titleController.text = image.title;
-    imgurlController.text = image.imgurl;
+    subtitleController.text = image.subtitle;
   }
 
 
   final titleController = TextEditingController();
-  final imgurlController = TextEditingController();
+  final subtitleController = TextEditingController();
 
 
 
   //値が入るまではnullだから、? でnullを許容する形にしてあげる
   String? title;
-  String? imgurl;
+  String? subtitle;
 
   void setTitle(String title){
     this.title = title;
     notifyListeners();
   }
 
-  void setImageurl(String imgurl){
-    this.imgurl = imgurl;
+  void setImageurl(String subtitle){
+    this.subtitle = subtitle;
     notifyListeners();
   }
 
   bool isUpdated(){
-    return title != null || imgurl != null;
+    return title != null || subtitle != null;
   }
 
 
   //firebaseの変更をリッスンしている
   Future update() async {
     this.title = titleController.text;
-    this.imgurl = imgurlController.text;
+    this.subtitle = subtitleController.text;
 
 
     // if (title == null) {
@@ -50,9 +50,9 @@ class EditImgModel extends ChangeNotifier {
     // }
 
     //firestoreのデータを変更
-    await FirebaseFirestore.instance.collection('images').doc(image.id).update({
+    await FirebaseFirestore.instance.collection('imags').doc(image.id).update({
       'title':title,
-      'imgurl':imgurl,
+      'subtitle':subtitle,
     });
   }
 }

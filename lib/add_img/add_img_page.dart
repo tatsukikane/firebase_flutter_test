@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_flutter_test/domain/image.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'add_img_model.dart';
@@ -25,15 +26,30 @@ class AddImgPage extends StatelessWidget {
           child: Consumer<AddImgModel>(builder: (context, model, child){
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: '写真のタイトル',
+              child: Column(
+                children: [
+                  GestureDetector(
+                    child: SizedBox(
+                      width: 320,
+                      height: 400,
+                      child: model.imageFile != null
+                      ? Image.file(model.imageFile!)
+                      : Container(
+                        color: Colors.grey,
+                      )
+                    ),
+                    onTap: () async {
+                      await model.pickImage();
+                    },
+                  ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: '写真のタイトル',
+                  ),
+                  onChanged: (text) {
+                    model.title = text;
+                  },
                 ),
-                onChanged: (text) {
-                  model.title = text;
-                },
-              ),
 
               const SizedBox(
                 height: 8,
@@ -41,10 +57,10 @@ class AddImgPage extends StatelessWidget {
             
               TextField(
                 decoration: InputDecoration(
-                  hintText: '写真のurl',
+                  hintText: '説明欄',
                 ),
                 onChanged: (text) {
-                  model.imgurl = text;
+                  model.subtitle = text;
                 },
               ),
               const SizedBox(
@@ -84,3 +100,4 @@ class AddImgPage extends StatelessWidget {
     );
   }
 }
+

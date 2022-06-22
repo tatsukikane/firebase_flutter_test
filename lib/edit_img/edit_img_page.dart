@@ -12,7 +12,7 @@ class EditImgPage extends StatelessWidget {
   EditImgPage(this.image);
 
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final CollectionReference _images = _firestore.collection('imags');
+  static final CollectionReference _images = _firestore.collection('images');
   final Stream<QuerySnapshot> _imagesStream = _images.snapshots();
 
   @override
@@ -43,9 +43,9 @@ class EditImgPage extends StatelessWidget {
               ),
             
               TextField(
-                controller: model.imgurlController,
+                controller: model.subtitleController,
                 decoration: InputDecoration(
-                  hintText: '写真のurl',
+                  hintText: '写真の説明',
                 ),
                 onChanged: (text) {
                   model.setImageurl(text);

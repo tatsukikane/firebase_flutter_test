@@ -93,8 +93,11 @@ class ImgListPage extends StatelessWidget {
 
 
                 child: ListTile(
+                leading: image.imgurl != null
+                      ? Image.network(image.imgurl!)
+                      : null,
                   title: Text(image.title),
-                  subtitle: Text(image.imgurl),
+                  subtitle: Text(image.subtitle),
                   ),
               ),
               ).toList();

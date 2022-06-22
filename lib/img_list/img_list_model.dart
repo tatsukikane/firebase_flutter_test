@@ -15,16 +15,17 @@ class ImgListModel extends ChangeNotifier {
   //firebaseの変更をリッスンしている
   void fetchImgList() async {
     final QuerySnapshot snapshot =
-      await FirebaseFirestore.instance.collection('images').get();
+      await FirebaseFirestore.instance.collection('imags').get();
     // final QuerySnapshot snapshot = await _imagesCollection.get();
 
     final List<Imagedeta> images = snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
       final String id = document.id;
       final String title = data['title'];
-      final String imgurl = data['imgurl'];
+      final String? imgurl = data['imgurl'];
+      final String subtitle = data['subtitle'];
       //image.dartで作った形にしてリターン
-      return Imagedeta(id,title,imgurl);
+      return Imagedeta(id,title,imgurl,subtitle);
     }).toList();
 
     this.images = images;
