@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_flutter_test/domain/image.dart';
 import 'package:firebase_flutter_test/edit_img/edit_img_page.dart';
+import 'package:firebase_flutter_test/login/login_page.dart';
+import 'package:firebase_flutter_test/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -24,6 +27,38 @@ class ImgListPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('画像一覧'),
+          actions: [
+            IconButton(onPressed: () async {
+              if (FirebaseAuth.instance.currentUser != null){
+                print('ログインしている');
+
+                //画面遷移
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyPage(),
+                    fullscreenDialog: true,
+                    ),
+                );
+
+              } else{
+                print('ログインしていない');
+                //画面遷移
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                    fullscreenDialog: true,
+                    ),
+                );
+
+              }
+
+
+
+            },
+            icon: Icon(Icons.person)),
+          ],
         ),
         body: Center(
           child: Consumer<ImgListModel>(builder: (context, model, child){
