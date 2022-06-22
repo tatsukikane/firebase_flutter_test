@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_flutter_test/domain/image.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'edit_profile_model.dart';
@@ -26,7 +27,16 @@ class EditProfilePage extends StatelessWidget {
         ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('プロフィール編集'),
+          title: Text(
+            'Edit',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.fascinate(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[300]
+                ),
+            
+            ),
         ),
         body: Center(
           child: Consumer<EditProfileModel>(builder: (context, model, child){

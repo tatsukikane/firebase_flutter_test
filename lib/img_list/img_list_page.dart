@@ -7,6 +7,7 @@ import 'package:firebase_flutter_test/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../add_img/add_img_page.dart';
@@ -26,7 +27,15 @@ class ImgListPage extends StatelessWidget {
       create: (_) => ImgListModel()..fetchImgList(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('画像一覧'),
+          title: Text(
+            'Epic Sunset Library',
+              textAlign: TextAlign.center,
+                  style: GoogleFonts.fascinate(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[300]
+                    ),
+             ),
           actions: [
             IconButton(onPressed: () async {
               if (FirebaseAuth.instance.currentUser != null){

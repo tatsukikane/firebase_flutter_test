@@ -3,6 +3,7 @@ import 'package:firebase_flutter_test/domain/image.dart';
 import 'package:firebase_flutter_test/edit_profile/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,16 @@ class MyPage extends StatelessWidget {
       create: (_) => MyModel()..fetchUser(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('MyPage'),
+          title: Text(
+            'MyPage',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.fascinate(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[300]
+                ),
+            
+          ),
           actions: [
            Consumer<MyModel>(builder: (context, model, child){
                 return IconButton(onPressed: () async {
